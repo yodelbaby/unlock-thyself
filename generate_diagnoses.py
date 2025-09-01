@@ -4,112 +4,93 @@ import json
 def generate_diagnoses(num_diagnoses):
     diagnoses = []
 
-    description_parts = {
-        "opening": [
-            "The patient exhibits a classic case of {disease_name}, a condition characterized by a profound sense of {symptom}.",
-            "The subject's responses indicate a severe affliction of {disease_name}, which involves an obsessive longing for {longing}.",
-            "We are seeing a textbook example of {disease_name}, where the patient is convinced that their missing {missing_item} have become quantumly entangled with a parallel universe.",
-            "The inkblots reveal a case of {disease_name}, where the patient experiences a profound sense of anxiety and despair when faced with {context}.",
-            "The subject appears to be suffering from {disease_name}, with a persistent and unshakeable belief that they are the main character in a grand, unfolding narrative."
-        ],
-        "manifestation": [
-            "This may manifest as a deep-seated resentment towards {resentment} and a tendency to communicate in {communication}.",
-            "This often leads to the belief that they were born in the wrong {wrong_era}, and they may be found frequenting {frequenting}.",
-            "This leads to a compulsive need to purchase an excessive number of {purchased_item} in the hope that they will eventually stabilize their {stabilized_item}.",
-            "This may result in a complete shutdown of the decision-making process, leading to the patient simply staring at {stared_at_item} until the establishment closes.",
-            "This may manifest as a tendency to narrate their own life in the {narration_style}, and a deep-seated disappointment with their {supporting_cast}."
-        ],
-        "closing": [
-            "The prognosis is uncertain, but we recommend a course of {treatment}.",
-            "Further analysis is required, but we suspect a correlation with {correlation}.",
-            "The patient's condition is exacerbated by their exposure to {exacerbated_by}.",
-            "We believe this condition may be linked to a childhood trauma involving {childhood_trauma}.",
-            "The only known cure is a strict regimen of {cure}."
-        ]
-    }
-
-    disease_name_templates = [
-        "{adjective} {noun} Syndrome",
-        "Chronic {noun} Disorder",
-        "Post-Traumatic {noun} Stress Disorder",
-        "Quantum {adjective} {noun} Entanglement",
-        "Existential {noun} Crisis",
-        "Hyper-Ironic {noun} Detachment",
-        "Benevolent {noun} Complex",
-        "Aesthetic-Induced {noun}",
-        "Cryptocurrency-Induced {noun} Mania",
-        "Post-Structuralist {noun} Disorder",
-        "Algorithmic {noun} Anxiety",
-        "Competitive {noun} Empathy",
-        "Semantic {noun} Satiation",
-        "Irony-Deficiency {noun} Anemia",
-        "Pre-Traumatic {noun} Stress Disorder",
+    templates = [
+        {
+            "name": "{adjective} {noun} Spectrum Disorder",
+            "description": "The patient's profile suggests a presentation consistent with {name}, a condition characterized by a persistent sense of {symptom} and a pattern of {behavior}. This may manifest as a preoccupation with {preoccupation} and a tendency to engage in {coping_mechanism}. The recommended course of action is {treatment}."
+        },
+        {
+            "name": "Latent {noun} Anxiety",
+            "description": "The subject's responses are indicative of {name}. This condition involves a recurring preoccupation with {preoccupation}, often leading to a belief that they are deficient in {deficiency}. They may be found engaging in {behavior}, and insisting that {insistence}. Further analysis is required, but we suspect a correlation with {correlation}."
+        },
+        {
+            "name": "Paradoxical {adjective} {noun} Response",
+            "description": "We are observing a textbook example of {name}. The patient exhibits a paradoxical reaction to {stimulus}, resulting in a compulsive need to {compulsion}. This is often an attempt to stabilize their {stabilized_item}. The patient's condition is exacerbated by their exposure to {exacerbated_by}."
+        },
+        {
+            "name": "Socio-Cognitive {noun} Dissonance",
+            "description": "The inkblots reveal a case of {name}. The patient experiences a profound sense of cognitive dissonance when faced with {situation}, particularly in the context of {context}. This may result in a complete shutdown of the decision-making process, leading to the patient simply {coping_mechanism}. We believe this condition may be linked to a childhood trauma involving {childhood_trauma}."
+        },
+        {
+            "name": "Normative {noun} Alienation",
+            "description": "The subject appears to be suffering from {name}. They have a persistent and unshakeable belief that they are fundamentally different from their peers. This may manifest as a tendency to {behavior}, an expectation of {expectation}, and a deep-seated disappointment with {disappointment}. The only known cure is a strict regimen of {cure}."
+        }
     ]
 
-    adjectives = ["Subterranean", "Recursive", "Quantum", "Existential", "Hyper-Ironic", "Benevolent", "Aesthetic-Induced", "Post-Structuralist", "Algorithmic", "Competitive", "Semantic", "Irony-Deficiency", "Pre-Traumatic", "Chronic", "Post-Traumatic"]
-    nouns = ["Homesick Alienation", "Nostalgia", "Sock Drawer", "Buffet", "Protagonist", "Detachment", "Dictator", "Synesthesia", "Culinary", "Anxiety", "Empathy", "Satiation", "Anemia", "Stress"]
-    symptoms = ["not belonging", "longing", "anxiety", "despair", "disappointment", "detachment", "bewilderment", "ennui"]
-    longings = ["a past that never actually existed", "a future that will never be", "a sense of purpose", "a decent cup of coffee", "a reasonably priced avocado"]
-    missing_items = ["socks", "keys", "motivation", "sense of self", "will to live"]
-    contexts = ["an all-you-can-eat buffet", "an online dating app", "the cereal aisle", "a voting booth", "a choose-your-own-adventure novel"]
-    resentments = ["popular culture", "the passage of time", "the laws of physics", "the concept of brunch", "the Oxford comma"]
-    communications = ["a series of complex, indecipherable clicks and whistles", "interpretive dance", "memes and gifs", "vague and cryptic pronouncements", "passive-aggressive sighs"]
-    wrong_eras = ["decade", "century", "millennium", "geological epoch", "timeline"]
-    frequentings = ["vintage shops", "ren-faires", "internet forums dedicated to dead technologies", "the comments section of YouTube videos about classic rock", "their own imagination"]
-    purchased_items = ["lottery tickets", "self-help books", "artisanal cheeses", "cryptocurrencies", "more socks"]
-    stabilized_items = ["life", "quantum state", "emotional state", "financial portfolio", "sock drawer"]
-    stared_at_items = ["food", "potential mates", "cereal boxes", "the ballot", "the page"]
-    narration_styles = ["the third person", "the second person", "the first person plural", "an unreliable narrator", "the epistolary format"]
-    supporting_casts = ["their supporting cast", "the people in their lives", "the general public", "their family", "their coworkers"]
-    treatments = ["intensive meme therapy", "a strict social media detox", "a course of existential dread counseling", "a daily dose of reality television", "a trip to a remote, wifi-free location"]
-    correlations = ["an overabundance of cat videos", "a deficiency in ironic detachment", "an excess of existential angst", "a latent desire to join the circus", "a subconscious belief in the healing power of crystals"]
-    exacerbated_bys = ["late-stage capitalism", "the 24-hour news cycle", "the internet", "social media influencers", "the gig economy"]
-    childhood_traumas = ["a particularly aggressive butterfly", "a traumatic experience with a mime", "a cheese-sculpting competition gone wrong", "a mermaid-themed birthday party", "a spontaneous disco fever outbreak"]
-    cures = ["a steady diet of artisanal toast", "a pilgrimage to the birthplace of a forgotten 90s sitcom", "a vow of silence", "a complete and total rejection of modernity", "a subscription to a streaming service that only shows black and white films"]
+    adjectives = ["Affective", "Somatic", "Cognitive", "Behavioral", "Existential", "Ironic", "Normative", "Paradoxical", "Latent", "Chronic"]
+    nouns = ["Dissonance", "Alienation", "Anxiety", "Nihilism", "Protagonist Syndrome", "Detachment", "Ambivalence", "Empathy Deficit", "Sonder", "Anhedonia"]
+    symptoms = ["emotional dysregulation", "interpersonal difficulties", "a fragmented sense of self", "pervasive ennui", "a general sense of unease"]
+    behaviors = ["maladaptive daydreaming", "excessive rumination", "social withdrawal", "intellectualization", "performative empathy"]
+    preoccupations = ["the curated realities of social media", "the perceived inadequacies of their own life", "the futility of modern existence", "the search for authentic connection", "the aestheticization of everyday life"]
+    coping_mechanisms = ["doomscrolling", "binge-watching nostalgic television shows", "engaging in ironic detachment", "curating a highly specific online persona", "listening to sad music in a minor key"]
+    treatments = ["a course of radical acceptance", "a digital detox", "mindfulness-based stress reduction", "a semi-ironic return to traditional values", "a trip to a remote, wifi-free location"]
+    deficiencies = ["cultural capital", "ironic detachment", "existential angst", "a coherent personal narrative", "a reasonable bedtime"]
+    insistences = ["that their taste in music is objectively superior", "that they were born in the wrong generation", "that the book was better than the movie", "that they are 'not like other girls/boys'", "that they are 'an old soul'"]
+    correlations = ["an overabundance of self-awareness", "a deficiency in serotonin", "an excess of student loan debt", "a latent desire to live in a cottage in the woods", "a subconscious belief in the transformative power of a new haircut"]
+    stimulus = ["unsolicited advice", "performative optimism", "the pressure to be happy", "the commodification of self-care", "the relentless pace of modern life"]
+    compulsions = ["purchase expensive candles", "reorganize their bookshelf by color", "start a podcast", "develop a niche hobby", "ironically adopt the mannerisms of a 1940s detective"]
+    stabilized_items = ["their emotional state", "their sense of identity", "their online brand", "their carefully curated collection of houseplants", "their sourdough starter"]
+    exacerbated_bys = ["late-stage capitalism", "the 24-hour news cycle", "the internet", "hustle culture", "the gig economy"]
+    situations = ["an unstructured social gathering", "a networking event", "a group project", "a first date", "a family holiday"]
+    contexts = ["a farm-to-table restaurant", "an artisanal coffee shop", "a co-working space", "a vintage clothing store", "a silent retreat"]
+    expectations = ["a dramatic plot twist", "a cinematic meet-cute", "a moment of profound realization", "a spontaneous musical number", "a standing ovation"]
+    disappointments = ["the supporting cast in their life", "the lack of a clear narrative arc", "the absence of a laugh track", "the mundanity of everyday life", "the quality of the catering"]
+    childhood_traumas = ["being picked last for dodgeball", "a traumatic experience with a substitute teacher", "a poorly executed school play", "a family vacation to a theme park", "a dial-up internet connection"]
+    cures = ["a steady diet of avocado toast", "a pilgrimage to the birthplace of a forgotten indie band", "a vow of digital silence", "a complete and total rejection of personal branding", "a subscription to a streaming service that only shows foreign films with subtitles"]
 
     for _ in range(num_diagnoses):
-        disease_name = random.choice(disease_name_templates).format(
-            adjective=random.choice(adjectives),
-            noun=random.choice(nouns)
-        )
+        template = random.choice(templates)
+        
+        adjective = random.choice(adjectives)
+        noun = random.choice(nouns)
 
-        opening = random.choice(description_parts["opening"])
-        manifestation = random.choice(description_parts["manifestation"])
-        closing = random.choice(description_parts["closing"])
+        name = template["name"].format(adjective=adjective, noun=noun)
 
         format_dict = {
-            "disease_name": disease_name,
+            "name": name,
+            "adjective": adjective,
+            "noun": noun,
             "symptom": random.choice(symptoms),
-            "longing": random.choice(longings),
-            "missing_item": random.choice(missing_items),
-            "context": random.choice(contexts),
-            "resentment": random.choice(resentments),
-            "communication": random.choice(communications),
-            "wrong_era": random.choice(wrong_eras),
-            "frequenting": random.choice(frequentings),
-            "purchased_item": random.choice(purchased_items),
-            "stabilized_item": random.choice(stabilized_items),
-            "stared_at_item": random.choice(stared_at_items),
-            "narration_style": random.choice(narration_styles),
-            "supporting_cast": random.choice(supporting_casts),
+            "behavior": random.choice(behaviors),
+            "preoccupation": random.choice(preoccupations),
+            "coping_mechanism": random.choice(coping_mechanisms),
             "treatment": random.choice(treatments),
+            "deficiency": random.choice(deficiencies),
+            "insistence": random.choice(insistences),
             "correlation": random.choice(correlations),
+            "stimulus": random.choice(stimulus),
+            "compulsion": random.choice(compulsions),
+            "stabilized_item": random.choice(stabilized_items),
             "exacerbated_by": random.choice(exacerbated_bys),
+            "situation": random.choice(situations),
+            "context": random.choice(contexts),
+            "expectation": random.choice(expectations),
+            "disappointment": random.choice(disappointments),
             "childhood_trauma": random.choice(childhood_traumas),
             "cure": random.choice(cures)
         }
 
-        description = f"{opening.format(**format_dict)} {manifestation.format(**format_dict)} {closing.format(**format_dict)}"
+        description = template["description"].format(**format_dict)
 
         diagnoses.append({
-            "name": disease_name,
+            "name": name,
             "description": description + " Also, you're probably gay."
         })
 
     return diagnoses
 
 if __name__ == "__main__":
-    diagnoses = generate_diagnoses(2000)
+    diagnoses = generate_diagnoses(500)
     with open("C:\\unlock-thyself\\services\\diagnoses.ts", "w", encoding="utf-8") as f:
         f.write("export const diagnoses = [\n")
         for diagnosis in diagnoses:
@@ -120,3 +101,8 @@ if __name__ == "__main__":
         f.write("];\n")
 
     print(f"Generated {len(diagnoses)} diagnoses and saved to C:\\unlock-thyself\\services\\diagnoses.ts")
+
+    print("\n--- Sample Diagnoses ---")
+    for i in range(5):
+        print(f"Name: {diagnoses[i]['name']}")
+        print(f"Description: {diagnoses[i]['description']}\n")

@@ -7,7 +7,6 @@ import { Diagnosis, UserResponse } from '../types';
 interface ResultScreenProps {
   diagnosis: Diagnosis | null;
   error: string;
-  onRestart: () => void;
   responses: UserResponse[];
 }
 
@@ -46,7 +45,7 @@ const svgToPng = (svgDataUrl: string): Promise<string> => {
   });
 };
 
-const ResultScreen: React.FC<ResultScreenProps> = ({ diagnosis, error, onRestart, responses }) => {
+const ResultScreen: React.FC<ResultScreenProps> = ({ diagnosis, error, responses }) => {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownloadPdf = async () => {

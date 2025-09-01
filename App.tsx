@@ -76,7 +76,7 @@ const App: React.FC = () => {
       case AppState.DIAGNOSING:
         return <LoadingScreen />;
       case AppState.RESULT:
-        return <ResultScreen diagnosis={diagnosis} error={error} onRestart={handleStart} responses={responses} />;
+        return <ResultScreen diagnosis={diagnosis} error={error} responses={responses} />;
       default:
         return <StartScreen onStart={handleStart} />;
     }
